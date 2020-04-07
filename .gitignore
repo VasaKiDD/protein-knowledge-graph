@@ -1,2 +1,4 @@
-/data/
+*.p
+*.gpickle
+*.xlsx
 /notebooks/.ipynb_checkpoints/
