@@ -1,4 +1,3 @@
-*.p
-*.gpickle
-*.xlsx
 /notebooks/.ipynb_checkpoints/
+/data/pp_interactions_undirected.gpickle
+/data/pp_interactions_directed.gpickle
