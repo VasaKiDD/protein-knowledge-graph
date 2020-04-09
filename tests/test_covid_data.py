@@ -10,7 +10,6 @@ def covid_data():
 
 
 class TestCovidData:
-
     def test_df(self, covid_data):
         assert covid_data._df is None
         assert isinstance(covid_data.df, pandas.DataFrame)

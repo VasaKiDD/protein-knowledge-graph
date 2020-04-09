@@ -1,20 +1,22 @@
-import networkx as nx
-import torch.nn as nn
-import torch
 import pickle
 import time
+
+import networkx
+import torch
+import torch.nn as nn
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 """
-Experimental : simple deep learning model to infer protein present in a tissue from vector of expression.
+Experimental : simple deep learning model to infer protein present in a tissue from a
+vector of expression.
 """
 
 
 class PPGCN(nn.Module):
     def __init__(self, accepted_link_value=0.0):
         super(PPGCN, self).__init__()
-        self.complete_graph = nx.read_gpickle("../data/pp_interactions_undirected.gpickle")
+        self.complete_graph = networkx.read_gpickle("../data/pp_interactions_undirected.gpickle")
         self.tissue_num_mapping = pickle.load(open("../data/tissue_num_mapping.pck", "rb"))
         self.accepted_link_value = accepted_link_value
         self.restrain_graph_by_values()

@@ -5,7 +5,7 @@ import warnings
 import networkx
 
 from covid_graphs.download_data import download_interactions_graph
-from covid_graphs.resources import ontology_files, interaction_files
+from covid_graphs.resources import interaction_files, ontology_files
 
 
 ontologies = {"biological_processes", "cell_components", "molecular_functions"}
@@ -60,6 +60,7 @@ class InteractionGraph:
     Undirected edge attributes:
 
     """
+
     def __init__(self, directed: bool = False):
         """
         Initialize a :class:`InteractionGraph`.

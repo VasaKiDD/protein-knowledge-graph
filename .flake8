@@ -9,6 +9,13 @@ inline-quotes="
 import-order-style=appnexus
 application-package-names=covid_graphs
 per-file-ignores=
+    covid_graphs/covid_data.py:D
+    covid_graphs/download_data.py:D
+    covid_graphs/graphs.py:D
+    covid_graphs/mappings.py:D
+    covid_graphs/resources.py:D
+    covid_graphs/utils.py:D
+    covid_graphs/dl_models/graph_dl_model.py:D
     **/__init__.py: F401
     **/tests/**:D
     **/tests/**:F811

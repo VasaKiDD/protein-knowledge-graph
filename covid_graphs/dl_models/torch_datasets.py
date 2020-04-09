@@ -1,47 +1,41 @@
 import numpy as np
+from torch.utils.data import Dataset
 from tqdm import tqdm
 
-try:
-    from torch.utils.data import Dataset
-except:
-    Dataset = object
+from covid_graphs.graphs import InteractionGraph
+
 
 # TODO(Vasakidd): Make sure all the relevant info is included in the documentation.
-""":param graph: the directed or undirected graph to create the data from
-        :param directed: True if directed else False
-        :param score_threshold: threshold on scores in edges
-        :param node_attribute: the type of node label to extract from graph (ex "sequence", "cellular_components", "info"...)
-                            see notebook node attributes
-        :param regression: True if regression task (keep scores) or False in classification (existing edge will be 1.0)
-        :param no_interactions_ratio: float between 0 and 1 controling amount of no_interaction data to create
-"""
-
-
-class PPInteraction_dataset(Dataset):
+class PPInteractionDataset(Dataset):
     """
-    Extract interaction data from graph an creates a torch dataset
+    Extract interaction data from graph an creates a torch dataset.
     """
 
     def __init__(
         self,
-        graph,
-        directed,
-        score_threshold,
-        node_attribute,
-        regression,
-        no_interactions_ratio=1.0,
+        graph: InteractionGraph,
+        score_threshold: float,
+        node_attribute: str,
+        regression: bool,
+        no_interactions_ratio: float = 1.0,
     ):
         """
+        Initialize a :class:`PPInteractionDataset`.
 
         Args:
             graph: Interaction graph that will be transformed to a Dataset.
-            directed:
-            score_threshold:
-            node_attribute:
-            regression:
-            no_interactions_ratio:
+            score_threshold: Threshold on scores in edges. TODO(vasakidd): give
+                             more info about this parameter.
+            node_attribute: The type of node label to extract from graph, check
+                           :class:`InteractionGraph` for more information on
+                           the data available node attributes.
+            regression: ``True`` creates a dataset for regression task on edge scores.
+                        ``False``  creates a dataset for classification (existing
+                        edges will be scored 1.0).
+            no_interactions_ratio: TODO(vasakidd): give more info about this parameter.
+
         """
-        if directed:
+        if graph.is_directed:
             edges = [
                 (x, y, z["link"], z["score"])
                 for x, y, z in graph.edges(data=True)
@@ -87,7 +81,7 @@ class PPInteraction_dataset(Dataset):
                 prot_b = np.random.choice(nodes)
             prot_a_data = graph.nodes(data=True)[prot_a][node_attribute]
             prot_b_data = graph.nodes(data=True)[prot_b][node_attribute]
-            if directed:
+            if graph.is_directed:
                 no_data.append((prot_a_data, prot_b_data, "not_linked", 0.0))
             else:
                 no_data.append((prot_a_data, prot_b_data, 0.0))

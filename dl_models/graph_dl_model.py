@@ -10,6 +10,7 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 Experimental : simple deep learning model to infer protein present in a tissue from vector of expression.
 """
 
+
 class PPGCN(nn.Module):
     def __init__(self, accepted_link_value=0.0):
         super(PPGCN, self).__init__()

@@ -6,6 +6,7 @@ import json
 import pandas as pd
 import pickle
 
+
 def convert_to_cytoscape(source_path, target_path):
     """
     :param source_path: localisation of the .gpickle graph
@@ -99,6 +100,7 @@ class PPInteraction_dataset(Dataset):
 
     def __len__(self):
         return len(self.data)
+
 
 def create_covid_data(column_protein, column_mf, column_cc, column_bp, column_info):
     covid19 = pd.read_excel("data/covid19.xlsx")

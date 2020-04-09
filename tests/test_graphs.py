@@ -10,7 +10,6 @@ def interaction_graph(request):
 
 
 class TestInteractionGraph:
-
     def test_load_data(self, interaction_graph: InteractionGraph):
         if interaction_graph.is_directed:
             assert isinstance(interaction_graph.graph, networkx.DiGraph)
@@ -19,7 +18,6 @@ class TestInteractionGraph:
 
 
 class TestOntologyGraph:
-
     @pytest.mark.parametrize("name", tuple(ontologies))
     def test_init_no_aliases(self, name):
         graph = OntologyGraph(name=name)

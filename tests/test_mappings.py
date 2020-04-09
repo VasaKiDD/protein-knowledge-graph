@@ -9,7 +9,6 @@ def mappings():
 
 
 class TestMappings:
-
     def test_names(self, mappings):
         for name in mappings.names:
             assert getattr(mappings, "_%s" % name) is None
