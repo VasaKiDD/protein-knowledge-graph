@@ -1,11 +1,17 @@
+from pathlib import Path
+from importlib.machinery import SourceFileLoader
 from setuptools import find_packages, setup
-from covid_graphs.version import __version__
+
+
+version = SourceFileLoader(
+    "fragile.version", str(Path(__file__).parent / "covid_graphs" / "version.py"),
+).load_module()
 
 extras = {"dl": ["torch", "torchvision"]}
 setup(
     name="covid_graphs",
     description="Covid data for research.",
-    version=__version__,
+    version=version,
     license="Apache 2.0",
     author="synergetic",
     author_email="davidk@synergetic.ai",
