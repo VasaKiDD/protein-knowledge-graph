@@ -3,7 +3,8 @@ import numpy as np
 from tqdm import tqdm
 from torch.utils.data import Dataset
 import json
-
+import pandas as pd
+import pickle
 
 def convert_to_cytoscape(source_path, target_path):
     """
@@ -22,7 +23,15 @@ class PPInteraction_dataset(Dataset):
     Extract interaction data from graph an creates a torch dataset
     """
 
-    def __init__(self, graph, directed, score_threshold, node_attribute, regression, no_interactions_ratio = 1.0):
+    def __init__(
+        self,
+        graph,
+        directed,
+        score_threshold,
+        node_attribute,
+        regression,
+        no_interactions_ratio=1.0,
+    ):
         """
         :param graph: the directed or undirected graph to create the data from
         :param directed: True if directed else False
@@ -90,3 +99,46 @@ class PPInteraction_dataset(Dataset):
 
     def __len__(self):
         return len(self.data)
+
+def create_covid_data(column_protein, column_mf, column_cc, column_bp, column_info):
+    covid19 = pd.read_excel("data/covid19.xlsx")
+    covid19_np = covid19.to_numpy()
+    covid_data = {}
+    covid_go_to_name = {}
+    for data in covid19_np:
+        covid_data[data[0]] = {}
+        if "HUMAN" in data[column_protein]:
+            covid_data[data[0]]["human"] = True
+        else:
+            covid_data[data[0]]["human"] = False
+        covid_data[data[0]]["sequence"] = data[5]
+        covid_data[data[0]]["molecular_functions"] = []
+        covid_data[data[0]]["cellular_components"] = []
+        covid_data[data[0]]["biological_processes"] = []
+        if data[column_mf] == data[column_mf]:
+            mfs = data[column_mf].split("; ")
+            for mf in mfs:
+                mf = mf.split(" [")
+                go_id = mf[-1][:-1]
+                covid_go_to_name[go_id] = mf[0]
+                covid_data[data[0]]["molecular_functions"].append(go_id)
+        if data[column_cc] == data[column_cc]:
+            ccs = data[column_cc].split("; ")
+            for cc in ccs:
+                cc = cc.split(" [")
+                go_id = cc[-1][:-1]
+                covid_go_to_name[go_id] = cc[0]
+                covid_data[data[0]]["cellular_components"].append(go_id)
+        if data[column_bp] == data[column_bp]:
+            bps = data[column_bp].split("; ")
+            for bp in bps:
+                bp = bp.split(" [")
+                go_id = bp[-1][:-1]
+                covid_go_to_name[go_id] = bp[0]
+                covid_data[data[0]]["biological_processes"].append(go_id)
+        if data[column_info] == data[column_info]:
+            covid_data[data[0]]["info"] = data[column_info][10:]
+
+    pickle.dump(covid_data, open("data/covid_data.p", "wb"))
+    pickle.dump(covid_go_to_name, open("data/covid_go_to_name.p", "wb"))
+    pickle.dump(covid_go_to_name, open("data/covid_go_to_name.p", "wb"))
