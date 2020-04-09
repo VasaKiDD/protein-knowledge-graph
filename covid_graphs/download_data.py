@@ -38,13 +38,26 @@ def download_interactions_graph(directed: bool, output=None) -> None:
 
 
 class _InteractionsDownloader:
-    # TODO(guillemdb): Update download links once the repo is public. To make it work now
-    # first you need to run `python3 -m http.server` inside the project folder.
-    DIRECTED_URL = "http://localhost:8000/directed/pp_interactions_directed.gpickle.lz4"
+    # NOTE: It is impossible to download files bigger than 1MB for private repos if they
+    # are not release assets. To make it work now first you need to run `python3 -m http.server`
+    # inside the root project folder (See notebook example).
+    DIRECTED_URL = ("http://localhost:8000/data/graphs/interactions/directed/"
+                    "pp_interactions_directed.gpickle.lz4")
     UNDIRECTED_URLS = (
-        "http://localhost:8000/undirected/undirectedaa.part",
-        "http://localhost:8000/undirected/undirectedab.part",
+        "http://localhost:8000/data/graphs/interactions/undirected/undirectedaa.part",
+        "http://localhost:8000/data/graphs/interactions/undirected/undirectedab.part",
     )
+
+    # Uncomment after public release
+    # DIRECTED_URL = ("https://api.github.com/Synergetic-ai/Bio-knowledge-graph-python/raw/"
+    #                "master/data/graphs/interactions/directed/"
+    #                "pp_interactions_directed.gpickle.lz4")
+    # UNDIRECTED_URLS = (
+    #    "https://github.com/Synergetic-ai/Bio-knowledge-graph-python/raw/master/data/graphs/"
+    #    "interactions/undirected/undirectedaa.part",
+    #    "https://github.com/Synergetic-ai/Bio-knowledge-graph-python/raw/master/data/graphs/"
+    #    "interactions/undirected/undirectedab.part",
+    # )
     DEFAULT_INTERACTIONS_PATH = get_interactions_path()
     DEFAULT_DIRECTED_NAME = interaction_file_names.directed
     DEFAULT_UNDIRECTED_NAME = interaction_file_names.undirected
@@ -55,7 +68,7 @@ class _InteractionsDownloader:
     def download_directed_interactions(
         cls, download_url: str = DIRECTED_URL, output: str = DEFAULT_DIRECTED_FILEPATH
     ):
-        headers = {"Accept": "application/octet-stream"}
+        headers = {"Accept": "application/vnd.github.v3.raw"}
         with requests.get(download_url, headers=headers, stream=True) as req:
             # Total size in bytes.
             total_size = int(req.headers.get("content-length", 0))
@@ -86,7 +99,7 @@ class _InteractionsDownloader:
                 for chunk in req.iter_content(one_kb):
                     yield chunk
 
-        headers = {"Accept": "application/octet-stream"}
+        headers = {"Accept": "application/vnd.github.v3.raw"}
         with requests.Session() as s:
             reqs = [s.get(url, headers=headers, stream=True) for url in download_urls]
             total_size = sum([int(req.headers.get("content-length", 0)) for req in reqs])

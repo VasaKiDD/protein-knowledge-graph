@@ -1,0 +1,59 @@
+language: python
+sudo: true
+dist: bionic
+services:
+  - docker
+cache: pip
+before_cache:
+  - chown -R travis:travis $HOME/.cache/pip
+stages:
+  - style
+  - test
+  - bump-version
+  - deploy
+before_install:
+  - env
+_install: &_install
+  - pip install --upgrade pip cython codecov pytest ipython
+  - pip install -r requirements.txt --no-use-pep517
+  - pip install . --no-use-pep517
+  - find . -wholename "./tests/*" -type d -exec chmod 555 {} \;
+
+_coverage: &_coverage
+  - coverage run --concurrency=multiprocessing -m pytest tests
+  - travis_retry coverage combine
+
+matrix:
+  fast_finish: true
+  include:
+    - stage: style
+      if: commit_message !~ /^Bump version/
+      name: "Check code style"
+      python: 3.7
+      script:
+        - make check
+      install:
+        - pip install -r requirements-lint.txt
+    - stage: test
+      if: commit_message !~ /^Bump version/
+      name: "Test python 3.6"
+      python: 3.6
+      script: *_coverage
+      install: *_install
+    - stage: test
+      if: commit_message !~ /^Bump version/
+      name: "Test python 3.7"
+      python: 3.7
+      script: *_coverage
+      install: *_install
+    - stage: test
+      if: commit_message !~ /^Bump version/
+      name: "Test python 3.8"
+      python: 3.8
+      script: *_coverage
+      install: *_install
+      after_success:
+        - codecov
+
+notifications:
+  email: false
