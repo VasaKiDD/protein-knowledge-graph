@@ -4,27 +4,27 @@ from setuptools import find_packages, setup
 
 
 version = SourceFileLoader(
-    "fragile.version", str(Path(__file__).parent / "covid_graphs" / "version.py"),
+    "pybiographs.version", str(Path(__file__).parent / "pybiographs" / "version.py"),
 ).load_module()
 
 extras = {"dl": ["torch", "torchvision"]}
 setup(
-    name="covid_graphs",
-    description="Covid data for research.",
-    version=version,
+    name="pybiographs",
+    description="Graphs of biological data for research.",
+    version=version.__version__,
     license="Apache 2.0",
-    author="synergetic",
+    author="Synergetic AI",
     author_email="davidk@synergetic.ai",
-    url="https://github.com/VasaKiDD/covid19-knowledge-ml-python",
-    download_url="https://github.com/VasaKiDD/covid19-knowledge-ml-python",
+    url="https://github.com/Synergetic-ai/Bio-knowledge-graph-python",
+    download_url="https://github.com/Synergetic-ai/Bio-knowledge-graph-python",
     keywords=["covid", "data", "graphs", "research"],
     install_requires=["lz4>=3.0.0", "networkx>=2.4<3", "pandas", "requests>=2.21.0"],
     packages=find_packages(),
     extras_require=extras,
-    test_require=["pytest>=5.3.5"],
+    tests_require=["pytest>=5.3.5"],
     package_data={
         "": ["LICENSE", "README.md"],
-        "covid_graphs": [
+        "pybiographs": [
             "data/covid/*.pck",
             "data/covid/*.csv",
             "data/mappings/*.pck",

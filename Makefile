@@ -1,6 +1,6 @@
 current_dir = $(shell pwd)
 
-PROJECT = covid_graphs
+PROJECT = pybiographs
 VERSION ?= latest
 
 .POSIX:

@@ -1,7 +1,7 @@
 import pandas
 import pytest
 
-from covid_graphs.covid_data import CovidData
+from pybiographs.covid_data import CovidData
 
 
 @pytest.fixture()

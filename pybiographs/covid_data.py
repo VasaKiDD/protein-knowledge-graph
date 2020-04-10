@@ -3,7 +3,7 @@ from typing import Any, Dict, List
 
 import pandas
 
-from covid_graphs.resources import covid_files
+from pybiographs.resources import covid_files
 
 
 # TODO(Vasakidd): Make sure all the relevant info is included in the documentation.

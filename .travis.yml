@@ -9,8 +9,6 @@ before_cache:
 stages:
   - style
   - test
-  - bump-version
-  - deploy
 before_install:
   - env
 _install: &_install

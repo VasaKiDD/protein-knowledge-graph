@@ -1,7 +1,7 @@
 import pickle
 from typing import Any, Dict, Tuple
 
-from covid_graphs.resources import mapping_files
+from pybiographs.resources import mapping_files
 
 
 # TODO(Vasakidd): Make sure all the relevant info is included in the documentation.
