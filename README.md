@@ -18,7 +18,7 @@ We gathered data from several sources:
 
 ## Installation
 
-## Get and open the data
+## Usage
   
 ## Infos abouts protein-protein interaction graphs
 
