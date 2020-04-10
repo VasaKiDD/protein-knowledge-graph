@@ -7,7 +7,7 @@ import lz4.frame
 import requests
 from tqdm.auto import tqdm
 
-from covid_graphs.resources import get_interactions_path, interaction_file_names, interaction_files
+from pybiographs.resources import get_interactions_path, interaction_file_names, interaction_files
 
 
 def download_interactions_graph(directed: bool, output=None) -> None:
@@ -38,28 +38,18 @@ def download_interactions_graph(directed: bool, output=None) -> None:
 
 
 class _InteractionsDownloader:
-    # NOTE: It is impossible to download files bigger than 1MB for private repos if they
-    # are not release assets. To make it work now first you need to run `python3 -m http.server`
-    # inside the root project folder (See notebook example).
+
     DIRECTED_URL = (
-        "http://localhost:8000/data/graphs/interactions/directed/"
+        "https://github.com/Synergetic-ai/Bio-knowledge-graph-python/raw/"
+        "master/data/graphs/interactions/directed/"
         "pp_interactions_directed.gpickle.lz4"
     )
     UNDIRECTED_URLS = (
-        "http://localhost:8000/data/graphs/interactions/undirected/undirectedaa.part",
-        "http://localhost:8000/data/graphs/interactions/undirected/undirectedab.part",
+        "https://github.com/Synergetic-ai/Bio-knowledge-graph-python/raw/master/data/graphs/"
+        "interactions/undirected/undirectedaa.part",
+        "https://github.com/Synergetic-ai/Bio-knowledge-graph-python/raw/master/data/graphs/"
+        "interactions/undirected/undirectedab.part",
     )
-
-    # Uncomment after public release
-    # DIRECTED_URL = ("https://api.github.com/Synergetic-ai/Bio-knowledge-graph-python/raw/"
-    #                "master/data/graphs/interactions/directed/"
-    #                "pp_interactions_directed.gpickle.lz4")
-    # UNDIRECTED_URLS = (
-    #    "https://github.com/Synergetic-ai/Bio-knowledge-graph-python/raw/master/data/graphs/"
-    #    "interactions/undirected/undirectedaa.part",
-    #    "https://github.com/Synergetic-ai/Bio-knowledge-graph-python/raw/master/data/graphs/"
-    #    "interactions/undirected/undirectedab.part",
-    # )
     DEFAULT_INTERACTIONS_PATH = get_interactions_path()
     DEFAULT_DIRECTED_NAME = interaction_file_names.directed
     DEFAULT_UNDIRECTED_NAME = interaction_file_names.undirected

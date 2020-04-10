@@ -1,6 +1,6 @@
 import pytest
 
-from covid_graphs import Mappings
+from pybiographs import Mappings
 
 
 @pytest.fixture()

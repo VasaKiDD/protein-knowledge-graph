@@ -2,7 +2,7 @@ import numpy as np
 from torch.utils.data import Dataset
 from tqdm import tqdm
 
-from covid_graphs.graphs import InteractionGraph
+from pybiographs.graphs import InteractionGraph
 
 
 # TODO(Vasakidd): Make sure all the relevant info is included in the documentation.

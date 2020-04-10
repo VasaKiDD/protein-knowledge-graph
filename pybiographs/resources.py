@@ -4,7 +4,7 @@ import warnings
 
 import pkg_resources
 
-from covid_graphs import __name__ as package_name
+from pybiographs import __name__ as package_name
 
 
 def get_data_folder() -> str:

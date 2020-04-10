@@ -4,8 +4,8 @@ import warnings
 
 import networkx
 
-from covid_graphs.download_data import download_interactions_graph
-from covid_graphs.resources import interaction_files, ontology_files
+from pybiographs.download_data import download_interactions_graph
+from pybiographs.resources import interaction_files, ontology_files
 
 
 ontologies = {"biological_processes", "cell_components", "molecular_functions"}

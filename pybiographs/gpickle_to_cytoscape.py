@@ -6,7 +6,7 @@ import networkx
 # TODO(Vasakidd): Make sure all the relevant info is included in the documentation.
 def convert_to_cytoscape(source_path, target_path):
     """
-    Explain what this does here!
+    Explain what this does here.
 
     Args:
         source_path: Path of the .gpickle graph

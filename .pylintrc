@@ -1,6 +1,6 @@
 [MASTER]
 jobs=0
-ignore=ray
+ignore=tests
 load-plugins=pylint.extensions.docparams
 
 [MESSAGES CONTROL]

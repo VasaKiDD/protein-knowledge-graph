@@ -1,7 +1,7 @@
 import networkx
 import pytest
 
-from covid_graphs import InteractionGraph, OntologyGraph, ontologies, ontology_aliases
+from pybiographs import InteractionGraph, OntologyGraph, ontologies, ontology_aliases
 
 
 @pytest.fixture(scope="class", params=(True, False))
