@@ -5,10 +5,6 @@
 #PyCharm IDE
 .idea/
 
-# Documentation build files
-doc/_build/
-doc/ast2vec.rst
-doc/modules.rst
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -75,7 +71,7 @@ instance/
 .scrapy
 
 # Sphinx documentation
-docsrc/_build/
+docs/_build/
 
 # PyBuilder
 target/
@@ -121,5 +117,5 @@ ENV/
 
 data/
 *.lz4
-docs/
+
 examples/
