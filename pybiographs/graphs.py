@@ -24,36 +24,37 @@ class InteractionGraph:
     """
     Represents a graph of protein-protein interactions.
 
-    It can load a directed or undirected graph, and wraps the corresponding networkx
-    graph. If it represents a directed graph it behaves as a :class:`networkx.Digraph`.
+    It can load a directed or undirected graph, and wraps the corresponding networkx \
+    graph. If it represents a directed graph it behaves as a :class:`networkx.Digraph`. \
     Otherwise it behaves as a :class:`networkx.Graph`.
 
     Node attributes:
-       * label : uniprot_id from uniprot (https://www.uniprot.org/)
-       * string node_type : metabolome_graph (with pathway and metabolites associated)
+
+       - label : uniprot_id from uniprot (https://www.uniprot.org/)
+       - string node_type : metabolome_graph (with pathway and metabolites associated)
                             or other_protein (not referenced as metabolome proteins:
                             no metabolites and no pathway on smpd : https://smpdb.ca/)
-       * string info : Text explaining the products of the mRNA that codes
+       - string info : Text explaining the products of the mRNA that codes
                        the protein from STRING database : https://string-db.org/).
-       * list cellular_components : list of Go Id cellular components the protein
+       - list cellular_components : list of Go Id cellular components the protein
                                     is belonging to in QuickGO (see gene ontology :
                                     https://www.ebi.ac.uk/QuickGO/).
                                     :class:`Mappings```.go_to_name`` maps GoId to names.
-       * list molecular_functions : list of Go Id as above but for molecular functions.
-       * list biological_processes : list of Go Id as above but for biological processes.
-       * list expression_data : Vector of float of size 308 corresponding to expression
+       - list molecular_functions : list of Go Id as above but for molecular functions.
+       - list biological_processes : list of Go Id as above but for biological processes.
+       - list expression_data : Vector of float of size 308 corresponding to expression
                                 ranks of intial RNAm coding the protein renormalized
                                 from 0 to 1 in 308 tissues (see https://bgee.org/).
                                 index_tissue is a dict mapping index in vector to
                                 string tissue name.
-       * list metabolites : list of HMDB ID metabolites associated to protein if
+       - list metabolites : list of HMDB ID metabolites associated to protein if
                             it is a metabolome_protein (see https://hmdb.ca/).
                             :class:`Mappings```.metabolite_id_to_name`` contains the
                              mapping from id to metabolite name.
-       * list pathways : list of pathway of names the belonging to the metabolome_protein.
+       - list pathways : list of pathway of names the belonging to the metabolome_protein.
                          for more information on a pathway, search it on smpd
                          (might not be referenced).
-       * string sequence : Amino acid sequence for the protein.
+       - string sequence : Amino acid sequence for the protein.
 
     Directed edge attributes:
 

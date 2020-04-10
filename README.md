@@ -1,5 +1,6 @@
 # covid19-knowledge-ml-python
 [![Travis build status](https://travis-ci.com/Synergetic-ai/Bio-knowledge-graph-python.svg)](https://travis-ci.com/Synergetic-ai/Bio-knowledge-graph-python)
+[![Documentation Status](https://readthedocs.org/projects/bio-knowledge-graph-python/badge/?version=latest)](https://bio-knowledge-graph-python.readthedocs.io/en/latest/?badge=latest)
 [![Code coverage](https://codecov.io/github/Synergetic-ai/Bio-knowledge-graph-python/coverage.svg)](https://codecov.io/github/Synergetic-ai/Bio-knowledge-graph-python)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
