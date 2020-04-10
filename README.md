@@ -1,4 +1,9 @@
 # covid19-knowledge-ml-python
+[![Travis build status](https://travis-ci.com/Synergetic-ai/Bio-knowledge-graph-python.svg)](https://travis-ci.com/Synergetic-ai/Bio-knowledge-graph-python)
+[![Code coverage](https://codecov.io/github/Synergetic-ai/Bio-knowledge-graph-python/coverage.svg)](https://codecov.io/github/Synergetic-ai/Bio-knowledge-graph-python)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
 
 This repo provides human protein-protein interaction graph in the form of networkX graph and additional data about covid-19 virus to study virus-human interactions at protein level. It is intended for Data Scientist and Machine Learning researchers who wants to cotribute with AI Research to medical discoveries in the pandemics. 
 
