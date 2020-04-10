@@ -120,6 +120,6 @@ ENV/
 *.ipynb
 
 data/
-
+*.lz4
 docs/
 examples/
