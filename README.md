@@ -6,9 +6,9 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 
-This repo provides human protein-protein interaction graph in the form of networkX graph and additional data about covid-19 virus to study virus-human interactions at protein level. It is intended for Data Scientist and Machine Learning researchers who wants to cotribute with AI Research to medical discoveries in the pandemics. 
+This repo provides human protein-protein interaction graph in the form of networkX graph and additional data about covid-19 virus to study virus-human interactions at protein level. It is intended for Data Scientist and Machine Learning researchers who want to contribute with AI Research to medical discoveries in the pandemic. 
 
-The protein-protein interaction graph not only stores interaction but also several informations about the type of interaction and protein involved (see nodes in graph)
+The protein-protein interaction graph not only stores interaction but also several informations about the type of interaction and protein involved (see nodes in graph).
 
 We gathered data from several sources:
 
@@ -17,8 +17,8 @@ We gathered data from several sources:
 * Geene expression database Bgee : https://bgee.org/
 * Human metabolome database HMDB : https://hmdb.ca/
 * Protein-protein intaraction database STRING : https://string-db.org/
-* small molecule pathway database SMPD : https://smpdb.ca/
-* data about covid-data:
+* Small molecule pathway database SMPD : https://smpdb.ca/
+* Covid-data:
   * https://covid-19.uniprot.org/uniprotkb?query=*
   * https://www.ebi.ac.uk/ena/pathogens/covid-19
 
