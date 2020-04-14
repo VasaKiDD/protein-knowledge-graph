@@ -1,11 +1,10 @@
 import os
-from typing import Union
-from tqdm import tqdm
-import warnings
 import re
-import numpy as np
+from typing import Union
+import warnings
 
 import networkx
+import numpy as np
 
 from pybiographs.download_data import download_interactions_graph
 from pybiographs.mappings import Mappings
@@ -20,6 +19,7 @@ ontology_aliases = {
 }
 
 aliases_to_ontology = {v: k for k, v in ontology_aliases.values()}
+
 
 # TODO(Vasakidd): Make sure all the relevant info is included in the documentation.
 class InteractionGraph:
@@ -173,11 +173,13 @@ class InteractionGraph:
 
     def remove_edges_by_threshold(self, graph, score_threshold=0.0):
         """
-        Remove from graph all edges that have a score inferior to threshold. Considering removing edges can do new
-        orphan nodes (with no edges), those node are removed also from graph.
+        Remove from graph all edges that have a score inferior to threshold.
+        Considering removing edges can do new orphan nodes (with no edges),
+        those node are removed also from graph.
         Args:
             graph: graph to clean edges
-            score_threshold: attribute score threshold, should be between 0 and 1 as edge scores are.
+            score_threshold: attribute score threshold, should be between 0 and 1
+            as edge scores are.
 
         Returns: cleaned graph
 
@@ -196,8 +198,9 @@ class InteractionGraph:
 
     def info_sequence_regex(self, res, reg, attribute):
         """
-        Depending on node attribute "info" or "sequence", search regex in all node attributes and return an union
-        between query node results and nodes that have a match
+        Depending on node attribute "info" or "sequence", search regex in all node
+        attributes and return an union between query node results and nodes that
+        have a match.
         Args:
             res: entry node list corresponding to query result so far
             reg: regex to be search as a string
@@ -215,7 +218,8 @@ class InteractionGraph:
 
     def pathway_regex(self, res, reg):
         """
-        Search a regex in "pathways" attribute of nodes in graph and return union of arg res with matching nodes
+        Search a regex in "pathways" attribute of nodes in graph and return union of arg res
+        with matching nodes.
         Args:
             res: entry node list corresponding to query results so far
             reg: regex to be search as a string
@@ -235,8 +239,9 @@ class InteractionGraph:
 
     def ontology_regex(self, res, reg):
         """
-        Search a regex in all ontological attributes of nodes in graph ("cellular_components", "biological_processes",
-        "cellular_components") and return an union of matching results with query results so far.
+        Search a regex in all ontological attributes of nodes in graph ("cellular_components",
+        "biological_processes", "cellular_components") and return an union of matching results
+        with query results so far.
         Args:
             res: entry node list corresponding to query results so far
             reg: regex to be search as a string
@@ -274,8 +279,8 @@ class InteractionGraph:
 
     def metabolites_regex(self, res, reg):
         """
-        Search a regex in metabolites names in graph node attributes and return an union of matching results with query
-        results so far.
+        Search a regex in metabolites names in graph node attributes and return an union
+        of matching results with query results so far.
         Args:
             res: entry node list corresponding to query results so far
             reg: regex to be search as a string
@@ -297,19 +302,20 @@ class InteractionGraph:
         self, regex, spec="i_p_m_o", tissue=None, score_threshold=0.0, expression_threshold=0.0
     ):
         """
-        This is the public method that need to be used to query for a subgraph of the graph by searching a regex
-        in the node attribute.
+        This is the public method that need to be used to query for a subgraph of
+        the graph by searching a regex in the node attribute.
         Step 1 : search nodes with matching regex in attributes
         Step 2 : removes nodes that are inferior to expression threshold
         Step 3 : create subragph from parent graph and removes edges inferior to score threshold
         Args:
             regex: regex to be searched in node attributes
-            spec: a string to specify where to search for, a combination of "i" (for info), "p" (for pathways), "m" (for
-            metabolites), "o" (for ontologies), separated by underscore "_". As a split is applied, the order is not
-            important.
+            spec: a string to specify where to search for, a combination of "i" (for info),
+            "p" (for pathways), "m" (for metabolites), "o" (for ontologies), separated by
+            underscore "_". As a split is applied, the order is not important.
             tissue: restrict the search by tissue (exemple "lung"). Default None and ignored.
-            score_threshold: threshold to apply to edges in subgraph, between 0 and 1 as the scores
-            expression_threshold: threshold to apply to expression score in tissue. Ignored if tissue is None.
+            score_threshold: threshold to apply to edges in subgraph, between 0 and 1 as
+            the scores expression_threshold: threshold to apply to expression score in tissue.
+            Ignored if tissue is None.
 
         Returns: New sub graph
 
@@ -338,20 +344,24 @@ class InteractionGraph:
         self, ontology_query=None, tissue=None, score_threshold=0.0, expression_threshold=0.0
     ):
         """
-        This is the public method that need to be used to query for a subgraph by searching for a set expression query
-        in ontology. As for method above, returns a sub graph cleaned by threshold.
+        This is the public method that need to be used to query for a subgraph by searching for
+        a set expression query in ontology. As for method above, returns a sub graph cleaned by
+        threshold.
         ontology query language:
         simple query: "goid" -> returns subgraph with nodes in goid
-        basic query : ["and", "goid1", "goid2", ...] -> returns subgraph with nodes in goid1 and goid2 and ...
+        basic query : ["and", "goid1", "goid2", ...] -> returns subgraph with nodes in goid1
+        and goid2 and ...
         basic query : ["not", "goid1", ...] -> returns subgraph with nodes not in goid1, ...
-        basic query : ["or", "goid1", "goid2"] -> returns subgraph with nodes in goid1 or goid2 or ...
+        basic query : ["or", "goid1", "goid2"] -> returns subgraph with nodes in goid1 or goid2
+        or ...
         complex query : ["and", ["or", "g1", "g2", ["and", "g3", "g4"]], ["not", "g5"], "g6"] :
-                -> return subgraph with nodes satisfying  (g1 or g2 or (g3 and g4)) and (not g5) and g6
+        -> return subgraph with nodes satisfying  (g1 or g2 or (g3 and g4)) and (not g5) and g6
         Args:
             ontology_query: the query list
             tissue: restrict the search by tissue (exemple "lung"). Default None and ignored.
             score_threshold: threshold to apply to edges in subgraph, between 0 and 1 as the scores
-            expression_threshold: threshold to apply to expression score in tissue. Ignored if tissue is None.
+            expression_threshold: threshold to apply to expression score in tissue.
+            Ignored if tissue is None.
 
         Returns: New sub graph
 
@@ -399,7 +409,7 @@ class InteractionGraph:
         else:
             node_results = []
             if self.is_directed:
-                #adjacents = list(set(self.successors(node)).union(self.predecessors(node)))
+                # adjacents = list(set(self.successors(node)).union(self.predecessors(node)))
                 adjacents = list(set(self.successors(node)))
             else:
                 adjacents = list(set(self.neighbors(node)))
@@ -411,15 +421,16 @@ class InteractionGraph:
         self, nodes, diameter=1, tissue=None, score_threshold=0.0, expression_threshold=0.0
     ):
         """
-        Takes nodes and returns sub graph generated by neighbor propagation up to a diameter. Will start recursively
-        to take all neighbors of entry nodes, then neighbors of neighbors, etc... The method will return subgraph
-        thresholded eventually by tissue and scores on edges.
+        Takes nodes and returns sub graph generated by neighbor propagation up to a diameter.
+        Will start recursively to take all neighbors of entry nodes, then neighbors of neighbors,
+        etc...The method will return subgraph thresholded eventually by tissue and scores on edges.
         Args:
             nodes: nodes to propagate
             diameter: diameter of the resulting sub graph around the node
             tissue: restrict the search by tissue (exemple "lung"). Default None and ignored.
             score_threshold: threshold to apply to edges in subgraph, between 0 and 1 as the scores
-            expression_threshold: threshold to apply to expression score in tissue. Ignored if tissue is None.
+            expression_threshold: threshold to apply to expression score in tissue.
+            Ignored if tissue is None.
 
         Returns: New graph with results
 
@@ -441,9 +452,9 @@ class InteractionGraph:
         Print nodes in graph up to a limit with specs similar to sub_graph_by_node_regex_search.
         Args:
             graph: graph where to print nodes
-            print_spec: a string to specify what to print, a combination of "i" (for info), "p" (for pathways), "m" (for
-            metabolites), "o" (for ontologies), separated by underscore "_". As a split is applied, the order is not
-            important.
+            print_spec: a string to specify what to print, a combination of "i" (for info),
+            "p" (for pathways), "m" (formetabolites), "o" (for ontologies),
+            separated by underscore "_". As a split is applied, the order is not important.
             limit: limit to the number of prints
 
         Returns: nothing
@@ -495,8 +506,8 @@ class InteractionGraph:
             if node in self.nodes():
                 expr_data.append(self.nodes[node]["expression_data"])
         expr_data = np.array(expr_data)
-        #expr_data += 1e-14
-        #expr_data = -1.0 * expr_data * np.log(expr_data)
+        # expr_data += 1e-14
+        # expr_data = -1.0 * expr_data * np.log(expr_data)
         expr_data = expr_data.sum(axis=0)
 
         cpt = 0
@@ -507,9 +518,10 @@ class InteractionGraph:
                 print(n_t[ix], " : ", expr_data[ix])
             cpt += 1
 
-    def most_present_biological_processes(self, graph, tissue, bp_size_thresh = 0, limit=10):
+    def most_present_biological_processes(self, graph, tissue, bp_size_thresh=0, limit=10):
         """
-        After sub_graph_from_node_propagation, this function can be used to print most affected biological processes.
+        After sub_graph_from_node_propagation, this function can be used to
+        print most affected biological processes.
         Args:
             graph: sub graph to print most affected components
             tissue: string, the tissue where to analyze the biological processes
@@ -528,7 +540,9 @@ class InteractionGraph:
                 common = nodes.intersection(ontology_prots)
                 res = 0.0
                 for prot in common:
-                    res += graph.nodes[prot]["expression_data"][self.maps.tissue_num_mapping[tissue]]
+                    res += graph.nodes[prot]["expression_data"][
+                        self.maps.tissue_num_mapping[tissue]
+                    ]
                 ontologies.append(self.maps.go_to_name[ontology])
                 res_vector.append(float(res / len(ontology_prots)))
         res_vector = np.array(res_vector)
@@ -540,7 +554,7 @@ class InteractionGraph:
             print("\t", ontologies[ix])
             cpt += 1
 
-    def most_present_cellular_components(self, graph, tissue, mf_size_thresh = 0, limit=10):
+    def most_present_cellular_components(self, graph, tissue, mf_size_thresh=0, limit=10):
         """
         Similar to most_affected_biological_processes; but for cellular components.
         Args:
@@ -561,7 +575,9 @@ class InteractionGraph:
                 common = nodes.intersection(ontology_prots)
                 res = 0.0
                 for prot in common:
-                    res += graph.nodes[prot]["expression_data"][self.maps.tissue_num_mapping[tissue]]
+                    res += graph.nodes[prot]["expression_data"][
+                        self.maps.tissue_num_mapping[tissue]
+                    ]
                 ontologies.append(self.maps.go_to_name[ontology])
                 res_vector.append(float(res / len(ontology_prots)))
         res_vector = np.array(res_vector)

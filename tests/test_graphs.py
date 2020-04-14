@@ -27,24 +27,18 @@ class TestInteractionGraph:
             ontology_query=["or", ["and", "GO:0006836", "GO:0097060"], "GO:0043083"]
         )
         sub_graph = interaction_graph.sub_graph_from_node_propagation(
-            node="Q9BYF1", diameter=2, tissue="lung", score_threshold=0.9, expression_threshold=0.0
+            nodes=["Q9BYF1"], diameter=2, tissue="lung", score_threshold=0.9, expression_threshold=0.0
         )
         interaction_graph.most_affected_biological_processes(sub_graph, "lung", limit=20)
         interaction_graph.most_affected_cellular_components(sub_graph, "lung", limit=20)
         interaction_graph.classify_tissue_by_node_expression(
             [
-                "Q9BYF1",
-                "O15393",
-                "Q92499",
-                "O43765",
-                "P20701",
-                "P35232",
-                "P84022",
-                "Q8N3R9",
-                "Q99623",
+                "Q9BYF1"
             ]
         )
-        interaction_graph.most_present_biological_processes(sub_graph, bp_size_thresh=500, tissue="lung", limit=20)
+        interaction_graph.most_present_biological_processes(
+            sub_graph, bp_size_thresh=500, tissue="lung", limit=20
+        )
         interaction_graph.most_present_cellular_components(sub_graph, "lung", limit=20)
 
 
