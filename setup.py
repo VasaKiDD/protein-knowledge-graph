@@ -4,7 +4,7 @@ from setuptools import find_packages, setup
 
 
 version = SourceFileLoader(
-    "pybiographs.version", str(Path(__file__).parent / "pybiographs" / "version.py"),
+    "pybiographs.version", str(Path(__file__).parent / "pybiographs" / "version.py")
 ).load_module()
 
 extras = {"dl": ["torch", "torchvision"]}
