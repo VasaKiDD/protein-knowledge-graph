@@ -35,7 +35,7 @@ copyright = "2020, Synergetic AI"
 author = "David Kas, Guillem Duran"
 
 # The short X.Y version
-from fragile import __version__
+from pybiographs import __version__
 
 version = __version__
 # The full version, including alpha/beta/rc tags
@@ -175,7 +175,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [(master_doc, "fragile", "Fragile Documentation", [author], 1)]
+man_pages = [(master_doc, "Pybiographs", "Pybiographs Documentation", [author], 1)]
 
 
 # -- Options for Texinfo output ----------------------------------------------
@@ -186,11 +186,11 @@ man_pages = [(master_doc, "fragile", "Fragile Documentation", [author], 1)]
 texinfo_documents = [
     (
         master_doc,
-        "Fragile",
-        "Fragile Documentation",
+        "Pybiographs",
+        "Pybiographs Documentation",
         author,
-        "Fragile",
-        "One line description of project.",
+        "Pybiographs",
+        "Graphs for biological research",
         "Miscellaneous",
     )
 ]
