@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 
-This repo provides human protein-protein interaction graph in the form of networkX graph and additional data about covid-19 virus to study virus-human interactions at protein level. It is intended for Data Scientist and Machine Learning researchers who want to contribute with AI Research to medical discoveries in the pandemic. 
+This repo provides human protein-protein interaction graph in the form of networkX graph and additional data about covid-19 virus to study virus-human interactions at protein level. It is intended for Data Scientist and Machine Learning researchers who want to contribute with AI Research to medical discoveries during the pandemic. 
 
 The protein-protein interaction graph not only stores interaction but also several informations about the type of interaction and protein involved (see nodes in graph).
 
@@ -24,12 +24,37 @@ We gathered data from several sources:
 
 ## Installation
 
+```python
+pip install pybiographs # Not available
+```
+
+Note : For now, just cloning available. As soon as the repo become non-beta, a pip package will be registered
+
 ## Usage
+
+```python
+import subprocess
+subprocess.Popen(["python3","-m","http.server"])
+from pybiographs import InteractionGraph, OntologyGraph, Mappings
+directed_graph = InteractionGraph(directed=True)
+undirected_graph = InteractionGraph(directed=False)
+bp_ontology = OntologyGraph('biological_processes')
+mf_ontology = OntologyGraph('molecular_functions')
+cc_ontology = OntologyGraph('cell_components')
+maps = Mappings()
+print(directed_graph.maps.names)
+covid_interacting_proteins = pickle.load(open('data/covid/covid_interacting_nodes.pck', "rb"))
+covid_data = pickle.load(open('data/covid/covid_data.pck', "rb"))
+```
+
+## Documentation
+
+Soon available
   
 ## Infos abouts protein-protein interaction graphs
 
-pp_interactions_undirected is a networkX nx.Graph() 
-pp_interactions_directed is a netorkx nx.MultiDiGraph()
+InteractionGraph(directed=False) returns a networkX nx.Graph() wrapped with other methods to study graph (see docs/files)
+InteractionGraph(directed=True) returns a netorkx nx.MultiDiGraph() wrapped with other methods to study graph (see docs/file)
 
 See https://networkx.github.io/documentation/stable/reference/classes/index.html for more info about the class
 
@@ -67,9 +92,9 @@ See https://networkx.github.io/documentation/stable/reference/classes/index.html
 
 ## Info about ontology graphs (or trees)
 
-cc_ontology : networkX directed nx.DiGraph() of cellular component ontology from QuickGo linked by "is_a" relation.
-mf_ontology : networkX directed nx.DiGraph() of molecular function ontology from QuickGo linked by "is_a" relation.
-bp_ontology : networkX directed nx.DiGraph() of biological process ontology from QuickGo linked by "is_a" relation.
+OntologyGraph('cell_components') : returns a wrapped networkX directed nx.DiGraph() of cellular component ontology from QuickGo linked by "is_a" relation.
+OntologyGraph('molecular_functions') : returns a wrapped networkX directed nx.DiGraph() of molecular function ontology from QuickGo linked by "is_a" relation.
+OntologyGraph('biological_processes') : returns a wrapped networkX directed nx.DiGraph() of biological process ontology from QuickGo linked by "is_a" relation.
 
 #### Node attributes
 
@@ -88,25 +113,25 @@ bp_ontology : networkX directed nx.DiGraph() of biological process ontology from
   
 ## Covid19 data
 
-* covid_data : dict containing data about proteins involved in covid-19 from https://covid-19.uniprot.org/uniprotkb?query=*:
+* data/covid/covid_data.pck : dict containing data about proteins involved in covid-19 from https://covid-19.uniprot.org/uniprotkb?query=*:
   * key human : homo sapiens protein or not
   * key sequance : amino acid sequence of the protein
   * key molecular_functions : same as for nodes of protein-protein interaction graph
   * key cellular_components : same as for nodes of protein-protein interaction graph
   * key biological_processes : same as for nodes of protein-protein interaction graph
   * key info : info from publications about the protein
-* covid_go_to_name : dict mapping go_id from covi-19 to names
-* covid_interacting_nodes : a list of nodes (proteins) that the proteins from covid-19 is interacting with. The purpose of this list is to use it as a test set for edge regression/classification machine learning models. The proteins has been extracted from https://www.biorxiv.org/content/10.1101/2020.03.22.002386v1
+* Mappings.covid_go_to_name : dict mapping go_id from covi-19 to names
+* data/covid/covid_interacting_nodes.pck : a list of nodes (proteins) that the proteins from covid-19 is interacting with. The purpose of this list is to use it as a test set for edge regression/classification machine learning models. The proteins has been extracted from https://www.biorxiv.org/content/10.1101/2020.03.22.002386v1
   
 ## Supplementary data
 
-* dict string_gene_to_proteins : mapping of genes to proteins products
-* dict cc_union_dict : mapping cellular_component GoId to all proteins included in the category
-* dict mf_union_dict : mapping molecular function GoId to all proteins included in the category
-* dict bp_union_dict : mapping biological processes GoId to all proteins included in the category
-* dict go_to_name : Go Id to name to the category
-* dict metabolite_id_to_name : HMDB ID to name of metabolite
-* dict tissue_num_mapping : tissue name to index in expression vector
+* dict Mappings.gene_to_proteins : mapping of genes to proteins products
+* dict Mappings.cell_components_union : mapping cellular_component GoId to all proteins included in the category
+* dict Mappings.molecular_functions_union : mapping molecular function GoId to all proteins included in the category
+* dict Mappings.biological_processes_union : mapping biological processes GoId to all proteins included in the category
+* dict Mappings.go_to_name : Go Id to name to the category
+* dict Mappings.metabolite_id_to_name : HMDB ID to name of metabolite
+* dict Mappings.tissue_num_mapping : tissue name to index in expression vector
 
 ## Bonus : create a pytorch Dataset from graphs
 
@@ -124,4 +149,11 @@ The method getitem(ix) will return :
 * (node_attribute_protein_a, node_attribute_protein_b, label) if undirected, with label between 0 and 1 if edge regression task else 0 or 1)
 
 Note: to create the classification dataset, the constructor creates labels with 0.0 by selecting edges that are not in the graph. For creating a balanced classification dataset, you should put a ratio of 1.0 to create as much 0.0 labels as 1.0 labels. You can play with the score_threshold to restrict size of existing edges.
+
+Example :
+
+```python
+from pybiographs.dl_models.torch_datasets import PPInteractionDataset
+edge_dataset = PPInteractionDataset(InteractionGraph(directed=False), score_threshold = 0.9, node_attribute = "sequence", regression = False, no_interactions_ratio = 1.0)
+```
 
