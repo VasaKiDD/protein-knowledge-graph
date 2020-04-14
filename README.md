@@ -49,6 +49,8 @@ covid_data = pickle.load(open('data/covid/covid_data.pck', "rb"))
 
 ## Documentation
 
+https://bio-knowledge-graph-python.readthedocs.io/en/latest/?badge=latest
+
 Soon available
   
 ## Infos abouts protein-protein interaction graphs
