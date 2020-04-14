@@ -1,11 +1,9 @@
 attrs>=19.3.0
-git+https://github.com/FragileTech/plangym.git#egg=plangym
 sphinx-rtd-theme==0.4.3
 m2r==0.2.1
+lz4==3.0.2
 networkx==2.4
-hypothesis==5.6.0
-numpy==1.18.2
-setproctitle==1.1.10
-ipython==7.13.0
-xxhash==1.4.3
+pandas==1.0.3
+requests==2.23.0
 tqdm==4.45.0
+ipython==7.13.0
