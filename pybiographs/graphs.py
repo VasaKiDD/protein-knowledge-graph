@@ -476,7 +476,7 @@ class InteractionGraph:
         Args:
             graph: graph where to print nodes
             print_spec: a string to specify what to print, a combination of "i" (for info),
-            "p" (for pathways), "m" (formetabolites), "o" (for ontologies),
+            "p" (for pathways), "m" (for metabolites), "o" (for ontologies),
             separated by underscore "_". As a split is applied, the order is not important.
             limit: limit to the number of prints.
 

@@ -9,6 +9,8 @@ before_cache:
 stages:
   - style
   - test
+  - bump-version
+  - deploy
 before_install:
   - env
 _install: &_install
@@ -52,6 +54,39 @@ matrix:
       install: *_install
       after_success:
         - codecov
+    - stage: bump-version
+      if: branch == master AND type != pull_request AND commit_message !~ /^Bump version/
+      name: Bump the version
+      install:
+        - git config --global user.name "Synergetic Bot"
+        - git config --global user.email "synergeticbot@synergetic-ai.awsapps.com"
+        - pip install bump2version
+      script:
+        - set -e
+        - git pull --no-edit origin master
+        - version_file=pybiographs/version.py
+        - current_version=$(grep __version__ $version_file | cut -d\" -f2)
+        - bumpversion --tag --current-version $current_version --commit patch $version_file
+        - git remote add synergetic-bot-remote https://synergeticbot:${GITHUB_TOKEN}@github.com/$TRAVIS_REPO_SLUG
+        - git push --tags synergetic-bot-remote HEAD:master
+        - set +e
+    - stage: deploy
+      if: tag =~ .*
+      name: Push package to PyPI
+      install:
+        - pip install --upgrade pip
+        - pip install twine pyopenssl
+      script:
+        - set -e
+        - test "v$(python3 setup.py --version)" == "$TRAVIS_TAG"
+        - python3 setup.py bdist_wheel
+        - set +e
+      deploy:
+        provider: script
+        script: twine upload dist/*.whl -u $PYPI_LOGIN -p $PYPI_PASS
+        skip_cleanup: true
+        on:
+          tags: true
 
 notifications:
   email: false
